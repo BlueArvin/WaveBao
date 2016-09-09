@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.arvin.wavebao.R;
 import com.arvin.wavebao.fragments.MainFragment;
@@ -73,6 +74,7 @@ public class MainActivity extends BaseActivity
         else
             cur_frag_tag = TAG_FRAGMENT_MAIN;
         setTabSelection();
+        Toast.makeText(this,"haha",Toast.LENGTH_SHORT).show();
     }
 
     @Override
