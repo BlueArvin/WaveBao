@@ -2,8 +2,10 @@ package com.arvin.wavebao.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.arvin.wavebao.R;
 
@@ -48,6 +50,11 @@ public abstract class BaseActivity extends AppCompatActivity{
         }
     }
 
+
+    public void showSnackBar(View view, String content){
+        Snackbar.make(view, content, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+    }
 
     protected Toolbar getToolbar(){
         return this.toolbar;

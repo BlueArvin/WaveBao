@@ -19,18 +19,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.animation.OvershootInterpolator;
 
 import com.arvin.wavebao.R;
 import com.arvin.wavebao.fragments.MainFragment;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String TAG_FRAGMENT_MAIN = "Import";
+    private static final String TAG_FRAGMENT_MAIN = "官方精品";
 
     private static final String KEY_CUR_FRAG = "key_cur_frag";
 
@@ -47,6 +48,8 @@ public class MainActivity extends BaseActivity
 
     private FragmentManager fragmentManager;
     private MainFragment mainFragment;
+
+    private boolean pendingIntroAnimation;
 
     @Override
     protected void setContentView() {
@@ -71,10 +74,11 @@ public class MainActivity extends BaseActivity
     private void initFragment() {
         if (getSavedInstanceState() != null)
             cur_frag_tag = getSavedInstanceState().getString(KEY_CUR_FRAG);
-        else
+        else{
+            pendingIntroAnimation = true;
             cur_frag_tag = TAG_FRAGMENT_MAIN;
+        }
         setTabSelection();
-        Toast.makeText(this,"haha",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -82,11 +86,12 @@ public class MainActivity extends BaseActivity
         outState.putString(KEY_CUR_FRAG, cur_frag_tag);
     }
 
+    @Optional
     @OnClick(R.id.fab)
     public void OnFabClicked() {
-        Snackbar.make(fab, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+        showSnackBar(fab,"发布自己的活动");
     }
+
 
     @Override
     public void onBackPressed() {
@@ -98,11 +103,6 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,6 +113,26 @@ public class MainActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        if (pendingIntroAnimation) {
+            pendingIntroAnimation = false;
+            fab.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
+            startContentAnimation();
+        }
+        return true;
+    }
+
+    private void startContentAnimation() {
+        fab.animate()
+                .translationY(0)
+                .setInterpolator(new OvershootInterpolator(1.f))
+                .setStartDelay(300)
+                .setDuration(400)
+                .start();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
