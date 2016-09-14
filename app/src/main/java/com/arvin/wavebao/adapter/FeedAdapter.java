@@ -267,9 +267,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
                 likedPositions.add(holder.getPosition());
                 updateLikesCounter(holder, true);
                 updateHeartButton(holder, true);
-                if (context instanceof MainActivity) {
-                    ((BaseActivity) context).showSnackBar(view,"喜欢你");
-                }
             }
         } else if (viewId == R.id.ivUserProfile) {
             if (onFeedItemClickListener != null) {

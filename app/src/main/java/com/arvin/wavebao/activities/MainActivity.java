@@ -1,12 +1,9 @@
 package com.arvin.wavebao.activities;
 
-import android.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -15,15 +12,11 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.OvershootInterpolator;
-
 import com.arvin.wavebao.R;
 import com.arvin.wavebao.fragments.MainFragment;
-
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.Optional;
@@ -161,11 +154,6 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-    /**
-     * 将所有的Fragment都置为隐藏状态。
-     *
-     * @param transaction 用于对Fragment执行操作的事务
-     */
     private void hideFragments(FragmentTransaction transaction) {
         if (mainFragment != null) {
             transaction.hide(mainFragment);

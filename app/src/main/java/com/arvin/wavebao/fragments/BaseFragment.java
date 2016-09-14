@@ -20,14 +20,21 @@ public abstract class BaseFragment extends Fragment {
 
     View rootView;
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        rootView = inflater.inflate(getFragLayoutId(),container,false);
-//        ButterKnife.inject(this,rootView);
-//        return rootView;
-//    }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(getFragLayoutId(),container,false);
+        ButterKnife.inject(this,rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupFeed();
+    }
 
     protected abstract int getFragLayoutId();
+    protected abstract void setupFeed();
 
 }

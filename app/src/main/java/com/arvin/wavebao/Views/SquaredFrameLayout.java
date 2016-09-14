@@ -1,4 +1,4 @@
-package com.arvin.wavebao.Views;
+package com.arvin.wavebao.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;

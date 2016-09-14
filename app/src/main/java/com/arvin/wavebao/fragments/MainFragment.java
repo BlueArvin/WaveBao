@@ -22,32 +22,18 @@ import butterknife.InjectView;
 /**
  * Created by yinqilong on 2016/9/9.
  */
-public class MainFragment extends BaseFragment implements FeedAdapter.OnFeedItemClickListener, SwipyRefreshLayout.OnRefreshListener {
-
-//    @InjectView(R.id.fragRootView)
-    RecyclerView rvFeed;
-
-//    @InjectView(R.id.swipyrefreshlayout)
-    SwipyRefreshLayout swipyrefreshlayout;
+public class MainFragment extends BaseSwipyRefreshFragment implements FeedAdapter.OnFeedItemClickListener, SwipyRefreshLayout.OnRefreshListener {
 
     private FeedAdapter feedAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.frag_main,container,false);
-        rvFeed = (RecyclerView) rootView.findViewById(R.id.fragRootView);
-        swipyrefreshlayout = (SwipyRefreshLayout) rootView.findViewById(R.id.swipyrefreshlayout);
-//        ButterKnife.inject(this,rootView);
-        return rootView;
+    protected int getFragLayoutId() {
+        return R.layout.frag_main;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setupFeed();
-    }
-
-    private void setupFeed() {
+    protected void setupFeed() {
+        super.setupFeed();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity()) {
             @Override
             protected int getExtraLayoutSpace(RecyclerView.State state) {
@@ -56,18 +42,10 @@ public class MainFragment extends BaseFragment implements FeedAdapter.OnFeedItem
         };
         rvFeed.setLayoutManager(linearLayoutManager);
 
-        swipyrefreshlayout.setOnRefreshListener(this);
-        swipyrefreshlayout.setDirection(SwipyRefreshLayoutDirection.BOTH);
-
         feedAdapter = new FeedAdapter(getActivity());
         feedAdapter.setOnFeedItemClickListener(this);
         rvFeed.setAdapter(feedAdapter);
         feedAdapter.updateItems(true);
-    }
-
-    @Override
-    protected int getFragLayoutId() {
-        return R.layout.frag_main;
     }
 
     @Override
@@ -83,23 +61,5 @@ public class MainFragment extends BaseFragment implements FeedAdapter.OnFeedItem
     @Override
     public void onProfileClick(View v) {
         Toast.makeText(getActivity(),"onProfileClick",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onRefresh(SwipyRefreshLayoutDirection direction) {
-        Log.d("MainActivity", "Refresh triggered at "
-                + (direction == SwipyRefreshLayoutDirection.TOP ? "top" : "bottom"));
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Hide the refresh after 2sec
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipyrefreshlayout.setRefreshing(false);
-                    }
-                });
-            }
-        }, 2000);
     }
 }
