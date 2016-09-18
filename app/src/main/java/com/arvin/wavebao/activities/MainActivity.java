@@ -16,7 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.OvershootInterpolator;
 import com.arvin.wavebao.R;
+import com.arvin.wavebao.fragments.EditInfoFragment;
+import com.arvin.wavebao.fragments.LoginFragment;
 import com.arvin.wavebao.fragments.MainFragment;
+import com.arvin.wavebao.fragments.RegFragment;
+
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.Optional;
@@ -25,6 +29,9 @@ public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG_FRAGMENT_MAIN = "官方精品";
+    private static final String TAG_FRAGMENT_REG = "注册";
+    private static final String TAG_FRAGMENT_LOGIN = "登录";
+    private static final String TAG_FRAGMENT_EDIT = "修改个人信息";
 
     private static final String KEY_CUR_FRAG = "key_cur_frag";
 
@@ -41,6 +48,9 @@ public class MainActivity extends BaseActivity
 
     private FragmentManager fragmentManager;
     private MainFragment mainFragment;
+    private RegFragment regFragment;
+    private LoginFragment loginFragment;
+    private EditInfoFragment editFragment;
 
     private boolean pendingIntroAnimation;
 
@@ -136,6 +146,7 @@ public class MainActivity extends BaseActivity
 
         switch (id) {
             case R.id.nav_camera:
+                cur_frag_tag = TAG_FRAGMENT_MAIN;
                 break;
             case R.id.nav_gallery:
                 break;
@@ -145,11 +156,21 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_share:
                 break;
+            case R.id.reg:
+                cur_frag_tag = TAG_FRAGMENT_REG;
+                break;
+            case R.id.login:
+                cur_frag_tag = TAG_FRAGMENT_LOGIN;
+                break;
+            case R.id.edit:
+                cur_frag_tag = TAG_FRAGMENT_EDIT;
+                break;
             case R.id.nav_send:
                 break;
         }
 
         setToolbarTitle(itemTitle);
+        setTabSelection();
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -157,6 +178,15 @@ public class MainActivity extends BaseActivity
     private void hideFragments(FragmentTransaction transaction) {
         if (mainFragment != null) {
             transaction.hide(mainFragment);
+        }
+        if (regFragment != null) {
+            transaction.hide(regFragment);
+        }
+        if (loginFragment != null) {
+            transaction.hide(loginFragment);
+        }
+        if (editFragment != null) {
+            transaction.hide(editFragment);
         }
     }
 
@@ -177,6 +207,27 @@ public class MainActivity extends BaseActivity
                 transaction.add(R.id.fl_content, mainFragment, TAG_FRAGMENT_MAIN);
             } else {
                 transaction.show(mainFragment);
+            }
+        }else if(TAG_FRAGMENT_REG.equals(cur_frag_tag)){
+            if (regFragment == null) {
+                regFragment = new RegFragment();
+                transaction.add(R.id.fl_content, regFragment, TAG_FRAGMENT_MAIN);
+            } else {
+                transaction.show(regFragment);
+            }
+        }else if(TAG_FRAGMENT_LOGIN.equals(cur_frag_tag)){
+            if (loginFragment == null) {
+                loginFragment = new LoginFragment();
+                transaction.add(R.id.fl_content, loginFragment, TAG_FRAGMENT_MAIN);
+            } else {
+                transaction.show(loginFragment);
+            }
+        }else if(TAG_FRAGMENT_EDIT.equals(cur_frag_tag)){
+            if (editFragment == null) {
+                editFragment = new EditInfoFragment();
+                transaction.add(R.id.fl_content, editFragment, TAG_FRAGMENT_MAIN);
+            } else {
+                transaction.show(editFragment);
             }
         }
 
