@@ -1,2 +1,2 @@
 # WaveBao
-It's an interesting app for people who want to go out for a wavetime!!!
+It's an interesting app for people who wants to go out for a wavetime!!!
