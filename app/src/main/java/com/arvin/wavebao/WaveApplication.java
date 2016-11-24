@@ -5,6 +5,12 @@ import android.app.Application;
 import cn.bmob.v3.Bmob;
 
 public class WaveApplication extends Application {
+
+	private static WaveApplication application_instance;
+
+	public static WaveApplication getApplicationInstance(){
+		return application_instance;
+	}
 	/**
 	 * SDK初始化也可以放到Application中
 	 * 46c730e7e33eabeb3ec790b3fb0a02d7
@@ -15,6 +21,8 @@ public class WaveApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		application_instance = this;
 		//提供以下两种方式进行初始化操作：
 //		//第一：设置BmobConfig，允许设置请求超时时间、文件分片上传时每片的大小、文件的过期时间(单位为秒)
 //		BmobConfig config =new BmobConfig.Builder(this)
